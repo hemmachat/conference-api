@@ -24,6 +24,13 @@ namespace ConferenceApi.Controllers
             _topicRepository = topicRepository;
         }
 
+        /// <summary>
+        /// Get sessions with topics
+        /// </summary>
+        /// <param name="speaker">Speaker name to filter e.g. 'Jon Skeet'</param>
+        /// <param name="date">Date to filter e.g. '2013-12-04'</param>
+        /// <param name="timeSlot">Timeslot to filter e.g. '09:00-10:00'</param>
+        /// <returns>Sessions with topics</returns>
         [HttpGet]
         public async Task<Item[]> GetSessionsTopics(string speaker, DateTime? date, string timeSlot)
         {
