@@ -9,6 +9,32 @@ namespace ConferenceApi
 {
     public class DataFilter
     {
+        public static Item[] FilterSessions(string speaker, DateTime? date, string timeSlot, Item[] sessions)
+        {
+            // limit the items if no input specify
+            if (string.IsNullOrEmpty(speaker) && date == null && string.IsNullOrEmpty(timeSlot))
+            {
+                sessions = sessions.Take(Constants.TotalItems).ToArray();
+            }
+
+            if (!string.IsNullOrEmpty(speaker))
+            {
+                sessions = DataFilter.FilterSpeaker(sessions, speaker);
+            }
+
+            if (date != null)
+            {
+                sessions = DataFilter.FilterDate(sessions, date);
+            }
+
+            if (!string.IsNullOrEmpty(timeSlot))
+            {
+                sessions = DataFilter.FilterTime(sessions, timeSlot);
+            }
+
+            return sessions;
+        }
+
         public static Item[] FilterSpeaker(Item[] sessions, string speaker)
         {
             var speakerSessions = new List<Item>();

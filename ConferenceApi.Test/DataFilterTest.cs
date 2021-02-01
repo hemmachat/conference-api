@@ -9,6 +9,36 @@ namespace ConferenceApi.Test
     public class DataFilterTest
     {
         [Fact]
+        public void Filter_Session_Given_Speaker_Date_Timeslot_Should_Return_Filtered_Data()
+        {
+            var items = new List<Item>
+            {
+                new Item
+                {
+                    Speaker = "Jon Skeet",
+                    Timeslot = "04 December 2013 09:00 - 10:00",
+                    Title = "C#"
+                },
+                new Item
+                {
+                    Speaker = "Venkat Subramanium",
+                    Timeslot = "December 2013 10:20 - 11:20",
+                    Title = "Cleaning up Code Smell"
+                },
+                new Item
+                {
+                    Speaker = "Daniel Roth",
+                    Timeslot = "05 December 2013 10:20 - 11:20",
+                    Title = "ASP.NET Web API 2"
+                }
+            };
+            
+            var result = DataFilter.FilterSessions("Jon Skeet", new DateTime(2013, 12, 4), "09:00-10:00", items.ToArray());
+
+            Assert.Single(result);
+        }
+
+        [Fact]
         public void Extract_Date_Given_Date_Time_Should_Return_Correct_Date()
         {
             Assert.Equal("4 December 2013", DataFilter.ExtractDate("4 December 2013 09:00 - 10:00"));

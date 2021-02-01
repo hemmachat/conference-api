@@ -28,27 +28,7 @@ namespace ConferenceApi.Controllers
         public async Task<Item[]> GetSessionsTopics(string speaker, DateTime? date, string timeSlot)
         {
             var sessions = await _sessionRepository.FetchSessions();
-
-            // limit the items if no input specify
-            if (string.IsNullOrEmpty(speaker) && date == null && string.IsNullOrEmpty(timeSlot))
-            {
-                sessions = sessions.Take(Constants.TotalItems).ToArray();
-            }
-
-            if (!string.IsNullOrEmpty(speaker))
-            {
-                sessions = DataFilter.FilterSpeaker(sessions, speaker);
-            }
-
-            if (date != null)
-            {
-                sessions = DataFilter.FilterDate(sessions, date);
-            }
-
-            if (!string.IsNullOrEmpty(timeSlot))
-            {
-                sessions = DataFilter.FilterTime(sessions, timeSlot);
-            }
+            sessions = DataFilter.FilterSessions(speaker, date, timeSlot, sessions);
 
             foreach (var session in sessions)
             {
