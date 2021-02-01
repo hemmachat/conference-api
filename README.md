@@ -5,6 +5,7 @@ This is an proxy to invoke the conference API to fetch conference data. I have m
 - The filter of speaker, date and timeslot does not seem to work
 
 ## Code Features
+- There are some comments in the code as the naming convention should be clear enough to understand
 - Cache some data
 - There are some unit tests and some integration tests
 - Use Swagger UI

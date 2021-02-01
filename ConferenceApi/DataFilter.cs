@@ -9,6 +9,14 @@ namespace ConferenceApi
 {
     public class DataFilter
     {
+        /// <summary>
+        /// Get session based on speaker, date and timeslot
+        /// </summary>
+        /// <param name="speaker">Speaker name</param>
+        /// <param name="date">Date</param>
+        /// <param name="timeSlot">Timeslot</param>
+        /// <param name="sessions">Session data</param>
+        /// <returns>The filtered data</returns>
         public static Item[] FilterSessions(string speaker, DateTime? date, string timeSlot, Item[] sessions)
         {
             // limit the items if no input specify
@@ -35,6 +43,12 @@ namespace ConferenceApi
             return sessions;
         }
 
+        /// <summary>
+        /// Get only data for a specific speaker
+        /// </summary>
+        /// <param name="sessions">Sessions data</param>
+        /// <param name="speaker">Speaker name to filter</param>
+        /// <returns>The filtered data</returns>
         public static Item[] FilterSpeaker(Item[] sessions, string speaker)
         {
             var speakerSessions = new List<Item>();
@@ -50,6 +64,12 @@ namespace ConferenceApi
             return speakerSessions.ToArray();
         }
 
+        /// <summary>
+        /// Get only data for a specific time
+        /// </summary>
+        /// <param name="sessions">Sessions data</param>
+        /// <param name="timeSlot">Timeslot to filter</param>
+        /// <returns>The filtered data</returns>
         public static Item[] FilterTime(Item[] sessions, string timeSlot)
         {
             var timeSessions = new List<Item>();
@@ -72,6 +92,11 @@ namespace ConferenceApi
             return timeSessions.ToArray();
         }
 
+        /// <summary>
+        /// Flatten the data to be faster traversal and avoid nested loops finding
+        /// </summary>
+        /// <param name="sessions">Sessions data</param>
+        /// <returns>Flatten sessions data</returns>
         public static Item[] FlattenData(Item[] sessions)
         {
             var items = new List<Item>();
@@ -108,6 +133,12 @@ namespace ConferenceApi
             return items.ToArray();
         }
 
+        /// <summary>
+        /// Get only specific date data from sessions
+        /// </summary>
+        /// <param name="sessions">Sessions data</param>
+        /// <param name="date">Date to be filtered</param>
+        /// <returns>Filtered sessions based of the date</returns>
         public static Item[] FilterDate(Item[] sessions, DateTime? date)
         {
             var dateSessions = new List<Item>();
@@ -132,6 +163,11 @@ namespace ConferenceApi
             return dateSessions.ToArray();
         }
 
+        /// <summary>
+        /// Extract time from timeslot text
+        /// </summary>
+        /// <param name="timeSlot">Timeslot text</param>
+        /// <returns>Time text</returns>
         public static string ExtractTime(string timeSlot)
         {
             var pattern = new Regex(@"\d{1,2}:\d{1,2}\s*-\s*\d{1,2}:\d{1,2}");
@@ -140,6 +176,11 @@ namespace ConferenceApi
                 pattern.Match(timeSlot).Value.Replace(" ", "");
         }
 
+        /// <summary>
+        /// Extract date text from timeslot text
+        /// </summary>
+        /// <param name="timeSlot">Timeslot text</param>
+        /// <returns>Date text</returns>
         public static string ExtractDate(string timeSlot)
         {
             var pattern = new Regex(@"\d{1,2}\s*\w+\s*\d{4}");
